@@ -1,5 +1,6 @@
 package org.blockchain;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -13,6 +14,7 @@ public class Miner {
     private Block currentBlock;
     private long nonce;
 
+    private long totalMines;
     private int availableProcessors;
 
 
@@ -24,12 +26,27 @@ public class Miner {
 
         List<Thread> threads=new ArrayList<>();
         this.currentBlock=block;
+        totalMines=0;
+        nonce=0;
 
         for (int i = 0; i < availableProcessors; i++) {
             Thread thread = new Thread(() -> {
+                long localMines=0;
                 while(!currentBlock.isGoldenHash()) {
-                    currentBlock.generateHash(incrementNonceSync());
+                    MiningRange miningRange = getNonceRange();
+                    for(long n=miningRange.getStart();n<miningRange.getEnd();n++)
+                    {
+                        currentBlock.generateHash(n);
+                        localMines++;
+                        if(currentBlock.isGoldenHash())
+                        {
+                            passMines(localMines);
+                            return;
+                        }
+                    }
                 }
+                passMines(localMines);
+                return;
             });
             threads.add(thread);
         }
@@ -48,7 +65,6 @@ public class Miner {
 
         System.out.println(block+" has just mined...");
         System.out.println("Hash is: "+block.getHash()+ " Tries: "+nonce);
-        nonce=0;
         //appending the block to the blockchain
         blockChain.addBlock(block);
         //calculating the reward
@@ -69,9 +85,19 @@ public class Miner {
         return nonce;
     }
 
-    public synchronized long getNonce()
+    public synchronized void passMines(long minedNonces)
     {
-        return nonce;
+        this.totalMines+=minedNonces;
+    }
+    public long getTotalMines()
+    {
+        return this.totalMines;
+    }
+    public synchronized MiningRange getNonceRange()
+    {
+        long temp = nonce;
+        nonce+=10000;
+        return new MiningRange(temp,nonce);
     }
     public double getReward() {
         return this.reward;

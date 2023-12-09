@@ -2,7 +2,7 @@ FROM ubuntu:latest
 LABEL authors="Majouo"
 
 # Use a base image with a Java runtime
-FROM openjdk:21-jre-slim
+FROM openjdk:21-jdk-slim
 
 # Set the working directory inside the container
 WORKDIR /app

@@ -31,16 +31,34 @@ public class Main {
             miner.mine(block0, blockChain);
             long finish = System.currentTimeMillis();
             long timeElapsed = finish - start;
+            System.out.println("\n" + "BLOCKCHAIN:\n" + blockChain);
+            System.out.println("Miner's reward: " + miner.getReward());
+            System.out.println("Time: "+ timeElapsed +" s");
+            System.out.println("Hashrate: " + miner.getTotalMines()/(timeElapsed/1000)+" H/s");
 
 
             //we will create the next block
             //we pass id, traction and this time the previous hash will contain
             // the hash value of Genesis block
+            start = System.currentTimeMillis();
             Block block1 = new Block(1, "transaction2", blockChain.getBlockChain().get(blockChain.size() - 1).getHash());
             miner.mine(block1, blockChain);
+            finish = System.currentTimeMillis();
+            timeElapsed = finish - start;
+            System.out.println("\n" + "BLOCKCHAIN:\n" + blockChain);
+            System.out.println("Miner's reward: " + miner.getReward());
+            System.out.println("Time: "+ timeElapsed +" s");
+            System.out.println("Hashrate: " + miner.getTotalMines()/(timeElapsed/1000)+" H/s");
 
+            start = System.currentTimeMillis();
             Block block2 = new Block(2, "transaction3", blockChain.getBlockChain().get(blockChain.size() - 1).getHash());
             miner.mine(block2, blockChain);
+            finish = System.currentTimeMillis();
+            timeElapsed = finish - start;
+            System.out.println("\n" + "BLOCKCHAIN:\n" + blockChain);
+            System.out.println("Miner's reward: " + miner.getReward());
+            System.out.println("Time: "+ timeElapsed +" s");
+            System.out.println("Hashrate: " + miner.getTotalMines()/(timeElapsed/1000)+" H/s");
 
         }catch (Exception ex)
         {
