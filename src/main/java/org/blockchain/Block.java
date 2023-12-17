@@ -95,7 +95,7 @@ public class Block {
 
     public String toString() {
 
-        return this.id+"-"+this.transaction+"-"+this.hash+"-"+this.previousHash+"-";
+        return Integer.toString(id) + previousHash + Long.toString(timeStamp) + Long.toString(nonce) + transaction.toString();
 
     }
 }

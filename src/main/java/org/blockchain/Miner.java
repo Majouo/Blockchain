@@ -79,11 +79,6 @@ public class Miner {
 
         return !block.getHash().substring (0, Constants.DIFFICULTY).equals (leadingZeros);
     }
-    public synchronized long incrementNonceSync()
-    {
-        nonce++;
-        return nonce;
-    }
 
     public synchronized void passMines(long minedNonces)
     {

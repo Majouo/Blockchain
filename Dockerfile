@@ -2,7 +2,7 @@ FROM ubuntu:latest
 LABEL authors="Majouo"
 
 # Use a base image with a Java runtime
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:11-jdk-focal
 
 # Set the working directory inside the container
 WORKDIR /app
