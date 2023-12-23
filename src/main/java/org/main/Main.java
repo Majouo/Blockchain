@@ -12,7 +12,7 @@ public class Main {
         Runtime runtime = Runtime.getRuntime();
 
         // Get the number of processors/threads available to the Java Virtual Machine
-        int availableProcessors = runtime.availableProcessors();
+        int availableProcessors = runtime.availableProcessors()-1;
         // First of all we instantiate the BlockChain class itself.
         BlockChain blockChain = new BlockChain();
         // we will instantiate the Miner class to fetch the minor object.
@@ -25,40 +25,16 @@ public class Main {
         //miner will take the transaction and will mine the block
         //to find the hash value and miner will append the block to Blockchain
         try {
-
-            long start = System.currentTimeMillis();
-            Block block0 = new Block(0, "transaction1", Constants.GENESIS_PREV_HASH);
-            miner.mine(block0, blockChain);
-            long finish = System.currentTimeMillis();
-            long timeElapsed = finish - start;
-            System.out.println("\n" + "BLOCKCHAIN:\n" + blockChain);
-            System.out.println("Miner's reward: " + miner.getReward());
-            System.out.println("Time: "+ timeElapsed +" s");
-            System.out.println("Hashrate: " + miner.getTotalMines()/(timeElapsed/1000)+" H/s");
-
-
-            //we will create the next block
-            //we pass id, traction and this time the previous hash will contain
-            // the hash value of Genesis block
-            start = System.currentTimeMillis();
-            Block block1 = new Block(1, "transaction2", blockChain.getBlockChain().get(blockChain.size() - 1).getHash());
-            miner.mine(block1, blockChain);
-            finish = System.currentTimeMillis();
-            timeElapsed = finish - start;
-            System.out.println("\n" + "BLOCKCHAIN:\n" + blockChain);
-            System.out.println("Miner's reward: " + miner.getReward());
-            System.out.println("Time: "+ timeElapsed +" s");
-            System.out.println("Hashrate: " + miner.getTotalMines()/(timeElapsed/1000)+" H/s");
-
-            start = System.currentTimeMillis();
-            Block block2 = new Block(2, "transaction3", blockChain.getBlockChain().get(blockChain.size() - 1).getHash());
-            miner.mine(block2, blockChain);
-            finish = System.currentTimeMillis();
-            timeElapsed = finish - start;
-            System.out.println("\n" + "BLOCKCHAIN:\n" + blockChain);
-            System.out.println("Miner's reward: " + miner.getReward());
-            System.out.println("Time: "+ timeElapsed +" s");
-            System.out.println("Hashrate: " + miner.getTotalMines()/(timeElapsed/1000)+" H/s");
+            while(true)
+            {
+                long start = System.currentTimeMillis();
+                miner.mine(blockChain);
+                long finish = System.currentTimeMillis();
+                long timeElapsed = finish - start;
+                System.out.println("\n" + "BLOCKCHAIN:\n" + blockChain);
+                System.out.println("Time: "+ timeElapsed +" s");
+                System.out.println("Hashrate: " + miner.getTotalMines()/(timeElapsed/1000)+" H/s");
+            }
 
         }catch (Exception ex)
         {
