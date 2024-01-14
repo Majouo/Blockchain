@@ -45,8 +45,10 @@ public class Miner {
                 long localMines=0;
                 while(!currentBlock.isGoldenHash()) {
                     MiningRange miningRange = getNonceRange();
-                    passMines(localMines);
-                    if(miningRange==null)return;
+                    if(miningRange==null){
+                        passMines(localMines);
+                        return;
+                    }
                     for(long n=miningRange.getStart();n<miningRange.getEnd();n++)
                     {
                         currentBlock.generateHash(n);
@@ -112,6 +114,10 @@ public class Miner {
     }
     public synchronized MiningRange getNonceRange()
     {
+        if(clientHandler.isRefreshBlock())
+        {
+            return null;
+        }
         if(nonce+10000>this.range.getEnd())
         {
             try {

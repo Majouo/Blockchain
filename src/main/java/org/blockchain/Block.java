@@ -39,13 +39,11 @@ public class Block {
 
         String hashValue = SHA256Helper.generateHash(dataToHash);
 
-        if(!notGoldenHash(hashValue))
-        {
+        if(!notGoldenHash(hashValue)) {
             this.hash = hashValue;
             this.nonce=nonce;
             this.goldenHash=true;
         }
-
     }
 
     public boolean notGoldenHash(String hash) {

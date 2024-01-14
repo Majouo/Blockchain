@@ -23,7 +23,7 @@ public class ClientHandler extends Thread{
     public ClientHandler(){
         try {
             setupMode=false;
-            clientSocket = new Socket("127.0.0.1", 4000);
+            clientSocket = new Socket("157.158.47.122", 4000);
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         }catch (Exception e){
@@ -36,9 +36,8 @@ public class ClientHandler extends Thread{
 
     }
     public void clear() throws IOException{
-        out.flush();
         while (in.ready()) {
-            in.read();
+            in.readLine();
         }
     }
     public Range getRange() throws IOException {

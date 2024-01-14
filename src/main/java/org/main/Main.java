@@ -12,7 +12,7 @@ public class Main {
         Runtime runtime = Runtime.getRuntime();
 
         // Get the number of processors/threads available to the Java Virtual Machine
-        int availableProcessors = runtime.availableProcessors()-1;
+        int availableProcessors = runtime.availableProcessors();
         // First of all we instantiate the BlockChain class itself.
         BlockChain blockChain = new BlockChain();
         // we will instantiate the Miner class to fetch the minor object.
@@ -32,7 +32,8 @@ public class Main {
                 long finish = System.currentTimeMillis();
                 long timeElapsed = finish - start;
                 System.out.println("\n" + "BLOCKCHAIN:\n" + blockChain);
-                System.out.println("Time: "+ timeElapsed +" s");
+                System.out.println("Time: "+ timeElapsed/1000 +" s");
+                System.out.println("Total mines: " + miner.getTotalMines());
                 System.out.println("Hashrate: " + miner.getTotalMines()/(timeElapsed/1000)+" H/s");
             }
 
